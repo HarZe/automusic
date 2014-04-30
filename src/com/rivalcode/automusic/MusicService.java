@@ -52,7 +52,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 	public void playSong() {
 		player.reset();
 		
-		Song playSong = songs.get(songPosn);
+		Song playSong = getCurrentSong();
 		songTitle = playSong.getTitle();
 		long currSong = playSong.getId();
 		Uri trackUri = ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, currSong);
@@ -65,6 +65,13 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 		}
 		
 		player.prepareAsync();
+	}
+	
+	public Song getCurrentSong() {
+		if (songPosn >= 0 && songPosn < songs.size())
+			return songs.get(songPosn);
+		else
+			return null;
 	}
 	
 	public void setSong(int songIndex){

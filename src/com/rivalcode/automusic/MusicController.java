@@ -9,8 +9,11 @@ public class MusicController extends MediaController {
 		super(context);
 	}
 
-	// override for avoiding hidding
 	public void hide() {
-		
+		super.show();
+	}
+	
+	public void hideAux() {
+		super.hide();
 	}
 }

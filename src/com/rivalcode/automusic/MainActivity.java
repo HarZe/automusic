@@ -17,11 +17,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.MediaController.MediaPlayerControl;
+import android.widget.TextView;
 
 public class MainActivity extends Activity implements MediaPlayerControl {
 
@@ -37,6 +37,8 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	protected boolean playbackPaused = false;
 	
 	protected Menu menu;
+	protected TextView currentSongTitle;
+	protected TextView currentSongInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,10 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 		
 		// Sets the controller
 		setController();
+		
+		// Gets the text view for "now playing"
+		currentSongTitle = (TextView) findViewById(R.id.songCurrentTitle);
+		currentSongInfo = (TextView) findViewById(R.id.songCurrentInfo);
 	}
 	
 	@Override
@@ -92,7 +98,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		this.menu = menu;
 		return true;
@@ -178,6 +183,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	public void songPicked(View view) {
 		musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
 		musicSrv.playSong();
+		updateCurrentSong();
 		if (playbackPaused) {
 			setController();
 			playbackPaused = false;
@@ -209,6 +215,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	
 	private void playNext() {
 		musicSrv.playNext();
+		updateCurrentSong();
 		if (playbackPaused) {
 			setController();
 			playbackPaused = false;
@@ -218,11 +225,17 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
 	private void playPrev() {
 		musicSrv.playPrev();
+		updateCurrentSong();
 		if (playbackPaused) {
 			setController();
 			playbackPaused = false;
 		}
 		controller.show(0);
+	}
+	
+	private void updateCurrentSong() {
+		currentSongTitle.setText(musicSrv.getCurrentSong().getTitle());
+		currentSongInfo.setText(musicSrv.getCurrentSong().getArtist() + " - " + musicSrv.getCurrentSong().getAlbum());
 	}
 
 	// MEDIA PLAYER CONTROLS:
