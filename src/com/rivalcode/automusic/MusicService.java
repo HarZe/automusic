@@ -28,6 +28,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 	protected boolean shuffle = false;
 	protected Random rand;
 	
+	protected MainActivity parent = null;
+	
 	public void onCreate() {
 		super.onCreate();
 		songPosn = 0;
@@ -45,8 +47,9 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 		player.setOnErrorListener(this);
 	}
 	
-	public void setList(ArrayList<Song> songList){
+	public void setList(ArrayList<Song> songList, MainActivity parent){
 		songs = songList;
+		this.parent = parent;
 	}
 	
 	public void playSong() {
@@ -117,6 +120,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 		Notification not = builder.build();
 		 
 		startForeground(NOTIFY_ID, not);
+		
+		parent.updateCurrentSong();
 	}
 	
 	@Override

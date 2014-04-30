@@ -42,10 +42,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	protected TextView currentSongTitle;
 	protected TextView currentSongInfo;
 	
+	protected MainActivity thisAux = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		thisAux = this;
 		
 		// Getting the songs from the device
 		songView = (ListView)findViewById(R.id.song_list);
@@ -88,7 +92,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			MusicBinder binder = (MusicBinder) service;
 			musicSrv = binder.getService();
-			musicSrv.setList(songList);
+			musicSrv.setList(songList, thisAux);
 			musicBound = true;
 		}
 	 
@@ -185,7 +189,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	public void songPicked(View view) {
 		musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
 		musicSrv.playSong();
-		updateCurrentSong();
 		if (playbackPaused) {
 			setController();
 			playbackPaused = false;
@@ -218,7 +221,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	
 	private void playNext() {
 		musicSrv.playNext();
-		updateCurrentSong();
 		if (playbackPaused) {
 			setController();
 			playbackPaused = false;
@@ -228,7 +230,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
 	private void playPrev() {
 		musicSrv.playPrev();
-		updateCurrentSong();
 		if (playbackPaused) {
 			setController();
 			playbackPaused = false;
@@ -236,7 +237,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 		controller.show(0);
 	}
 	
-	private void updateCurrentSong() {
+	public void updateCurrentSong() {
 		currentSongTitle.setText(musicSrv.getCurrentSong().getTitle());
 		currentSongInfo.setText(musicSrv.getCurrentSong().getArtist() + " - " + musicSrv.getCurrentSong().getAlbum());
 	}
