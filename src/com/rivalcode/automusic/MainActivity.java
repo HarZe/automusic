@@ -1,5 +1,6 @@
 package com.rivalcode.automusic;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -208,6 +210,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 			}
 		});
 		
+		controller.setBackgroundColor(android.graphics.Color.GRAY);
 		controller.setMediaPlayer(this);
 		controller.setAnchorView(findViewById(R.id.song_list));
 		controller.setEnabled(true);
