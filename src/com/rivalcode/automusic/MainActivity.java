@@ -304,4 +304,10 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	public void start() {
 		musicSrv.go();
 	}
+
+	@Override
+	public int getAudioSessionId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
