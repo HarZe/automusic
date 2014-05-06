@@ -112,7 +112,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 		Notification.Builder builder = new Notification.Builder(this);
 		 
 		builder.setContentIntent(pendInt)
-		  .setSmallIcon(R.drawable.play)
+		  .setSmallIcon(R.drawable.notification)
 		  .setTicker(songTitle)
 		  .setOngoing(true)
 		  .setContentTitle("Playing")

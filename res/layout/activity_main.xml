@@ -1,8 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/play_pause"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#202020"
+    android:fillViewport="true"
     tools:context=".MainActivity" >
 
     <LinearLayout
@@ -35,9 +37,88 @@
         <ListView
             android:id="@+id/song_list"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dip"
+          	android:layout_weight="1"
             android:background="#EFEFEF" >
         </ListView>
+
+        <LinearLayout
+            android:id="@+id/media_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <ImageButton
+                android:id="@+id/loop_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/loop" />
+
+            <ImageButton
+                android:id="@+id/back_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back" />
+
+            <ImageButton
+                android:id="@+id/play_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/play" />
+
+            <ImageButton
+                android:id="@+id/next_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ffw" />
+
+            <ImageButton
+                android:id="@+id/rand_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rand" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/media_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/current_duration"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="00:00"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/holo_blue_light"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <SeekBar
+                android:id="@+id/duration_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/total_duration"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="00:00"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/holo_blue_light"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

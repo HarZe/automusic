@@ -10,9 +10,9 @@ public class MusicController extends MediaController {
 		super(new ContextThemeWrapper(context, R.style.MusicPlayer));
 	}
 
-	public void hide() {
+	/*public void hide() {
 		super.show();
-	}
+	}*/
 	
 	public void hideAux() {
 		super.hide();

@@ -1,6 +1,6 @@
 package com.rivalcode.automusic;
 
-import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -17,10 +17,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.MediaController.MediaPlayerControl;
 import android.widget.TextView;
@@ -43,6 +43,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	protected TextView currentSongInfo;
 	
 	protected MainActivity thisAux = null;
+	
+	protected boolean looping = false;
+	protected boolean loopSong = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 		// Gets the text view for "now playing"
 		currentSongTitle = (TextView) findViewById(R.id.songCurrentTitle);
 		currentSongInfo = (TextView) findViewById(R.id.songCurrentInfo);
+		
+		// Button listeners
+		buttonListenersSetup();
 	}
 	
 	@Override
@@ -112,13 +118,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_shuffle:
-			MenuItem button = menu.getItem(0);
-			if (musicSrv.setShuffle())
-				button.setIcon(R.drawable.rand_on);
-			else
-				button.setIcon(R.drawable.rand);
-			break;
 		case R.id.action_end:
 			stopService(playIntent);
 			musicSrv = null;
@@ -240,6 +239,54 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	public void updateCurrentSong() {
 		currentSongTitle.setText(musicSrv.getCurrentSong().getTitle());
 		currentSongInfo.setText(musicSrv.getCurrentSong().getArtist() + " - " + musicSrv.getCurrentSong().getAlbum());
+	}
+	
+	protected void buttonListenersSetup() {
+		final ImageButton loopButton = (ImageButton) findViewById(R.id.loop_button);
+		final ImageButton backButton = (ImageButton) findViewById(R.id.back_button);
+		final ImageButton playButton = (ImageButton) findViewById(R.id.play_button);
+		final ImageButton nextButton = (ImageButton) findViewById(R.id.next_button);
+		final ImageButton randButton = (ImageButton) findViewById(R.id.rand_button);
+		
+		loopButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                
+            	if (!looping) {
+            		looping = true;
+            		loopButton.setImageResource(R.drawable.loop_on);
+            	}
+            	else
+            		if (!loopSong) {
+            			loopSong = true;
+            			loopButton.setImageResource(R.drawable.loop_1);
+            		}
+            		else {
+            			looping = loopSong = false;
+            			loopButton.setImageResource(R.drawable.loop);
+            		}
+            	
+            }
+        });
+		
+		nextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	if (musicSrv.setShuffle())
+            		randButton.setImageResource(R.drawable.rand_on);
+        		else
+        			randButton.setImageResource(R.drawable.rand);
+            }
+        });
+		
+		randButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	if (musicSrv.setShuffle())
+            		randButton.setImageResource(R.drawable.rand_on);
+        		else
+        			randButton.setImageResource(R.drawable.rand);
+            }
+        });
+		
+		
 	}
 
 	// MEDIA PLAYER CONTROLS:
