@@ -22,10 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.MediaController.MediaPlayerControl;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements MediaPlayerControl {
+public class MainActivity extends Activity {
 
 	protected ArrayList<Song> songList;
 	protected ListView songView;
@@ -34,16 +33,18 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	protected Intent playIntent;
 	protected boolean musicBound = false;
 	
-	protected MusicController controller;
-	protected boolean paused = false;
-	protected boolean playbackPaused = false;
-	
 	protected Menu menu;
 	protected TextView currentSongTitle;
 	protected TextView currentSongInfo;
+	protected ImageButton loopButton;
+	protected ImageButton backButton;
+	protected ImageButton playButton;
+	protected ImageButton nextButton;
+	protected ImageButton randButton;
 	
 	protected MainActivity thisAux = null;
 	
+	protected boolean paused = false;
 	protected boolean looping = false;
 	protected boolean loopSong = false;
 	
@@ -70,12 +71,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 		SongAdapter songAdt = new SongAdapter(this, songList);
 		songView.setAdapter(songAdt);
 		
-		// Sets the controller
-		setController();
-		
 		// Gets the text view for "now playing"
 		currentSongTitle = (TextView) findViewById(R.id.songCurrentTitle);
 		currentSongInfo = (TextView) findViewById(R.id.songCurrentInfo);
+		loopButton = (ImageButton) findViewById(R.id.loop_button);
+		backButton = (ImageButton) findViewById(R.id.back_button);
+		playButton = (ImageButton) findViewById(R.id.play_button);
+		nextButton = (ImageButton) findViewById(R.id.next_button);
+		randButton = (ImageButton) findViewById(R.id.rand_button);
 		
 		// Button listeners
 		buttonListenersSetup();
@@ -91,7 +94,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 		}
 	}
 	
-	// connect to the service
+	// Connecting to the service
 	private ServiceConnection musicConnection = new ServiceConnection() {
 		
 		@Override
@@ -133,27 +136,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 		musicSrv = null;
 		super.onDestroy();
 	}
-	
-	@Override
-	protected void onPause(){
-		super.onPause();
-		paused = true;
-	}
-	
-	@Override
-	protected void onResume(){
-		super.onResume();
-		if (paused) {
-			setController();
-			paused = false;
-		}
-	}
-	
-	@Override
-	protected void onStop() {
-		controller.hide();
-		super.onStop();
-	}
 
 	/**
 	 * Get the songs from the device
@@ -188,52 +170,8 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	public void songPicked(View view) {
 		musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
 		musicSrv.playSong();
-		if (playbackPaused) {
-			setController();
-			playbackPaused = false;
-		}
-		controller.show(0);
-	}
-	
-	protected void setController() {
-		controller = new MusicController(this);
-		controller.setPrevNextListeners(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				playNext();
-			}
-		},
-		
-		new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				playPrev();
-			}
-		});
-		
-		controller.setBackgroundColor(android.graphics.Color.GRAY);
-		controller.setMediaPlayer(this);
-		controller.setAnchorView(findViewById(R.id.song_list));
-		controller.setEnabled(true);
-	}
-	
-	private void playNext() {
-		musicSrv.playNext();
-		if (playbackPaused) {
-			setController();
-			playbackPaused = false;
-		}
-		controller.show(0);
-	}
-
-	private void playPrev() {
-		musicSrv.playPrev();
-		if (playbackPaused) {
-			setController();
-			playbackPaused = false;
-		}
-		controller.show(0);
+		paused = false;
+		playButton.setImageResource(R.drawable.pause);
 	}
 	
 	public void updateCurrentSong() {
@@ -242,11 +180,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	}
 	
 	protected void buttonListenersSetup() {
-		final ImageButton loopButton = (ImageButton) findViewById(R.id.loop_button);
-		final ImageButton backButton = (ImageButton) findViewById(R.id.back_button);
-		final ImageButton playButton = (ImageButton) findViewById(R.id.play_button);
-		final ImageButton nextButton = (ImageButton) findViewById(R.id.next_button);
-		final ImageButton randButton = (ImageButton) findViewById(R.id.rand_button);
 		
 		loopButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -268,12 +201,31 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             }
         });
 		
+		backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	musicSrv.playPrev();
+            }
+        });
+		
+		playButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	if (paused) {
+            		musicSrv.go();
+            		paused = false;
+            		playButton.setImageResource(R.drawable.pause);
+            	}
+            	else {
+            		musicSrv.pausePlayer();
+            		paused = true;
+            		playButton.setImageResource(R.drawable.play);
+            	}
+            		
+            }
+        });
+		
 		nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	if (musicSrv.setShuffle())
-            		randButton.setImageResource(R.drawable.rand_on);
-        		else
-        			randButton.setImageResource(R.drawable.rand);
+            	musicSrv.playNext();
             }
         });
 		
@@ -286,25 +238,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             }
         });
 		
-		
 	}
 
-	// MEDIA PLAYER CONTROLS:
-	
-	@Override
-	public boolean canPause() {
-		return true;
-	}
-
-	@Override
-	public boolean canSeekBackward() {
-		return true;
-	}
-
-	@Override
-	public boolean canSeekForward() {
-		return true;
-	}
+	/* MEDIA PLAYER CONTROLS:
 
 	@Override
 	public int getBufferPercentage() {
@@ -337,24 +273,13 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 	}
 
 	@Override
-	public void pause() {
-		playbackPaused = true;
-		musicSrv.pausePlayer();
-	}
-
-	@Override
 	public void seekTo(int pos) {
 		musicSrv.seek(pos);
-	}
-
-	@Override
-	public void start() {
-		musicSrv.go();
 	}
 
 	@Override
 	public int getAudioSessionId() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	} */
 }

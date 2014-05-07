@@ -136,11 +136,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 	}
 	
 	public boolean setShuffle() {
-		if (shuffle)
-			shuffle = false;
-		else
-			shuffle = true;
-		
+		shuffle = !shuffle;
 		return shuffle;
 	}
 	
@@ -150,6 +146,18 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 		 
 	public int getDur(){
 		return player.getDuration();
+	}
+	
+	public String getDurationString() {
+		return formatDuration(player.getDuration());
+	}
+	
+	public int getCur() {
+		return player.getCurrentPosition();
+	}
+	
+	public String getCurrentString() {
+		return formatDuration(player.getCurrentPosition());
 	}
 		 
 	public boolean isPng(){
@@ -188,6 +196,14 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 		    	songPosn = 0;
 		}
 		playSong();
+	}
+	
+	protected String formatDuration(int ms) {
+		int secs = ms / 1000;
+		int mins = secs / 60;
+		String s_secs = (secs > 9) ? "0" + secs : "" + secs;
+		String s_mins = (mins > 9) ? "0" + mins : "" + mins;
+		return s_mins + ":" + s_secs;
 	}
 	
 	public class MusicBinder extends Binder {

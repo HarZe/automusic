@@ -14,7 +14,7 @@ public class MusicController extends MediaController {
 		super.show();
 	}*/
 	
-	public void hideAux() {
+	/*public void hideAux() {
 		super.hide();
-	}
+	}*/
 }
