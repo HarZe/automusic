@@ -1,125 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/play_pause"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#202020"
     android:fillViewport="true"
-    tools:context=".MainActivity" >
+    android:gravity="center" >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:gravity="center" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/choose_mode_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/now_playing"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#FFFFFF" />
+            android:text="@string/choose_mode"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#EFEFEF" />
 
         <TextView
-            android:id="@+id/songCurrentTitle"
+            android:id="@+id/void_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/local_mode_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local_mode"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#88AAFF" />
-
+            android:textColor="#EFEFEF" />
+        
+        <ImageButton
+            android:id="@+id/local_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/notification" />
+        
         <TextView
-            android:id="@+id/songCurrentInfo"
+            android:id="@+id/void_text_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#AACCFF" />
-
-        <ListView
-            android:id="@+id/song_list"
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <TextView
+            android:id="@+id/youtube_mode_text"
             android:layout_width="wrap_content"
-            android:layout_height="0dip"
-          	android:layout_weight="1"
-            android:background="#EFEFEF" >
-        </ListView>
-
-        <LinearLayout
-            android:id="@+id/media_controls"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center" >
-
-            <ImageButton
-                android:id="@+id/loop_button"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/loop" />
-
-            <ImageButton
-                android:id="@+id/back_button"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/back" />
-
-            <ImageButton
-                android:id="@+id/play_button"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/play" />
-
-            <ImageButton
-                android:id="@+id/next_button"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ffw" />
-
-            <ImageButton
-                android:id="@+id/rand_button"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/rand" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/media_bar"
-            android:layout_width="match_parent"
+            android:text="@string/youtube_mode"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#EFEFEF" />
+        
+        <ImageButton
+            android:id="@+id/youtube_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center" >
-
-            <TextView
-                android:id="@+id/current_duration"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="00:00"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/holo_blue_light"
-                android:textStyle="bold"
-                android:gravity="center" />
-
-            <SeekBar
-                android:id="@+id/duration_bar"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/total_duration"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="00:00"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/holo_blue_light"
-                android:textStyle="bold"
-                android:gravity="center" />
-
-        </LinearLayout>
+            android:src="@drawable/play" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/license_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/license"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/holo_blue_light"
+        android:textColorHint="@android:color/holo_blue_light" />
 
 </RelativeLayout>

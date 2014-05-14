@@ -8,13 +8,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
@@ -28,7 +28,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 	protected boolean shuffle = false;
 	protected Random rand;
 	
-	protected MainActivity parent = null;
+	protected MusicActivity parent = null;
 	
 	public void onCreate() {
 		super.onCreate();
@@ -47,7 +47,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 		player.setOnErrorListener(this);
 	}
 	
-	public void setList(ArrayList<Song> songList, MainActivity parent){
+	public void setList(ArrayList<Song> songList, MusicActivity parent){
 		songs = songList;
 		this.parent = parent;
 	}
@@ -105,7 +105,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 	public void onPrepared(MediaPlayer mediaPlayer) {
 		mediaPlayer.start();
 		
-		Intent notIntent = new Intent(this, MainActivity.class);
+		Intent notIntent = new Intent(this, MusicActivity.class);
 		notIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent pendInt = PendingIntent.getActivity(this, 0, notIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		 

@@ -35,29 +35,49 @@ public final class R {
         public static final int rand_on=0x7f02000b;
     }
     public static final class id {
-        public static final int action_end=0x7f080012;
-        public static final int back_button=0x7f080007;
-        public static final int current_duration=0x7f08000c;
-        public static final int duration_bar=0x7f08000d;
-        public static final int loop_button=0x7f080006;
-        public static final int media_bar=0x7f08000b;
-        public static final int media_controls=0x7f080005;
-        public static final int next_button=0x7f080009;
-        public static final int play_button=0x7f080008;
+        public static final int action_end=0x7f080023;
+        public static final int back_button=0x7f08000e;
+        public static final int choose_mode_text=0x7f080001;
+        public static final int current_duration=0x7f080013;
+        public static final int duration_bar=0x7f080014;
+        public static final int event_log=0x7f08001c;
+        public static final int license_text=0x7f080008;
+        public static final int local_button=0x7f080004;
+        public static final int local_mode_text=0x7f080003;
+        public static final int loop_button=0x7f08000d;
+        public static final int media_bar=0x7f080012;
+        public static final int media_controls=0x7f08000c;
+        public static final int next_button=0x7f080010;
+        public static final int pause_button=0x7f08001e;
+        public static final int play_button=0x7f08000f;
         public static final int play_pause=0x7f080000;
-        public static final int rand_button=0x7f08000a;
-        public static final int songCurrentInfo=0x7f080003;
-        public static final int songCurrentTitle=0x7f080002;
-        public static final int song_artist=0x7f080010;
-        public static final int song_duration=0x7f080011;
-        public static final int song_list=0x7f080004;
-        public static final int song_title=0x7f08000f;
-        public static final int textView1=0x7f080001;
-        public static final int total_duration=0x7f08000e;
+        public static final int rand_button=0x7f080011;
+        public static final int skip_to_text=0x7f08001f;
+        public static final int songCurrentInfo=0x7f08000a;
+        public static final int songCurrentTitle=0x7f080009;
+        public static final int song_artist=0x7f080021;
+        public static final int song_duration=0x7f080022;
+        public static final int song_list=0x7f08000b;
+        public static final int song_title=0x7f080020;
+        public static final int state_text=0x7f080016;
+        public static final int style_chromeless=0x7f08001b;
+        public static final int style_default=0x7f080019;
+        public static final int style_minimal=0x7f08001a;
+        public static final int style_radio_group=0x7f080018;
+        public static final int total_duration=0x7f080015;
+        public static final int video_chooser=0x7f08001d;
+        public static final int void_text=0x7f080002;
+        public static final int void_text_2=0x7f080005;
+        public static final int youtube_button=0x7f080007;
+        public static final int youtube_mode_text=0x7f080006;
+        public static final int youtube_view=0x7f080017;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int song=0x7f030001;
+        public static final int activity_music=0x7f030001;
+        public static final int activity_youtube=0x7f030002;
+        public static final int player_controls_container=0x7f030003;
+        public static final int song=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f070000;
@@ -65,8 +85,13 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
+        public static final int choose_mode=0x7f050005;
+        public static final int error_player=0x7f050008;
         public static final int hello_world=0x7f050002;
+        public static final int license=0x7f050004;
+        public static final int local_mode=0x7f050006;
         public static final int now_playing=0x7f050003;
+        public static final int youtube_mode=0x7f050007;
     }
     public static final class style {
         /** 
